@@ -1,0 +1,89 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Pika
+providerId: pika-art
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Video Generation
+- AI Video
+- Generative AI
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Pika spend. There are two distinct cost surfaces. First, the
+  pika.art consumer app is sold as flat monthly subscriptions (Free, Standard,
+  Pro, Fancy) where each generation draws down a monthly credit balance sized by
+  resolution, duration, and mode - a prepaid-credit model, not metered billing.
+  Second, programmatic access is NOT sold by Pika: Pika's models are hosted on
+  fal.ai (Pika's official inference partner) and billed per generation on fal.
+  Published fal rates for Pika 2.1 include roughly $0.40 per text-to-video clip
+  (up to 5 seconds at 720p or 1080p) and about $0.20 for a 5-second 720p
+  image-to-video clip. Longer durations and higher resolutions cost more.
+notes: >-
+  Pika does not issue API invoices; developer spend appears on the fal.ai bill.
+  Per-generation rates are fal's and vary by model version, resolution, and
+  duration - reconcile against fal's live model pages. Consumer subscription
+  prices are on pika.art/pricing. Figures captured 2026-07-11.
+sources:
+- https://pika.art/pricing
+- https://pika.art/api
+- https://blog.fal.ai/pika-api-is-now-powered-by-fal/
+- https://fal.ai/models/fal-ai/pika/v2.2/text-to-video/api
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Pika
+serviceCategory: AI and Machine Learning
+billingModel:
+  pricingCategory: Subscription-Based and Usage-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+focusColumns:
+  ServiceName: Pika
+  ServiceCategory: AI and Machine Learning
+  ProviderName: Pika
+  PublisherName: Pika
+  InvoiceIssuerName: Pika
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Subscription-Based
+meters:
+- name: subscription_credits
+  description: Monthly credits included with a Pika app subscription; each generation consumes credits by resolution, duration, and mode.
+  unit: credits
+  aggregation: sum
+  dimensions:
+  - account
+  - plan
+- name: fal_generation
+  description: Per-generation charge on fal.ai for Pika model calls (billed by fal, not Pika). Varies by model version, resolution, and duration.
+  unit: generations
+  aggregation: sum
+  dimensions:
+  - fal_account
+  - model
+  - resolution
+  - duration
+principles:
+- name: Visibility
+  description: Track credit burn per Pika app account and, for programmatic use, per-generation spend on the fal.ai dashboard by model, resolution, and duration.
+- name: Allocation
+  description: Map Pika subscriptions to teams and separate fal API keys/projects per workload so generation spend maps to cost centers.
+- name: Optimization
+  description: Generate at the lowest resolution and shortest duration that meets quality needs; prefer the credit subscription for steady in-app use and fal per-generation billing for bursty programmatic workloads.
+- name: Accountability
+  description: Assign an owner to each subscription and each fal project; review monthly credit consumption and fal invoices against budget.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

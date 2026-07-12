@@ -1,0 +1,105 @@
+aid: pika-art
+name: Pika
+review:
+  question: Does Pika expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-11'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Pika does not operate a public API on its
+    own domain at all, so there is no Pika-hosted server-push transport
+    (WebSocket or SSE) to model. Pika's official programmatic access is delivered
+    through fal.ai, where the Pika 2.x models run behind fal's asynchronous HTTP
+    queue (submit / poll status / fetch result) - a request/response REST flow
+    with client-initiated polling, not a WebSocket. That queue is fal's transport
+    surface, not Pika's, and is out of scope for a Pika AsyncAPI document.
+findings:
+  summary: |
+    Pika does not publish a documented public WebSocket API - and, more
+    fundamentally, it does not publish a first-party developer API of any kind on
+    pika.art. Pika (Pika Labs) is a consumer / creator generative AI video
+    product accessed through its web app (and historically a Discord bot). The
+    pika.art/api page is a marketing landing page whose call to action ("Get the
+    power of Pika's video models from the comfort of your own product on fal AI")
+    hands developers off to fal.ai. Pika's official API program is delivered via
+    a partnership with fal, which hosts Pika's 2.2 models (text-to-video,
+    image-to-video, Pikascenes, Pikaframes) plus v2.1 variants as fal model
+    endpoints. Those endpoints use fal's asynchronous HTTP queue (submit, status,
+    result) authenticated with a fal API key (Authorization: Key FAL_KEY) - pure
+    request/response REST over HTTPS with polling. No realtime, bidirectional, or
+    streaming WebSocket (ws:// or wss://) endpoint is documented by Pika or by
+    fal for the Pika models. Separately, several unofficial third-party wrappers
+    (PiAPI, useapi.net, Pollo, pikapikapika.io) resell Pika access; they are not
+    operated or endorsed by Pika and were not treated as Pika's official API.
+  accessModel: |
+    Consumer / app-first product. End users buy credit-based monthly
+    subscriptions (Free, Standard, Pro, Fancy) to use the pika.art web app.
+    Programmatic / developer access is not first-party: it is provided through
+    fal.ai under an official Pika-fal partnership and billed per generation on
+    fal. There is no api.pika.art host, no Pika-issued API key, and no
+    Pika-published OpenAPI document. This entry is therefore a gated stub - the
+    documented endpoint surface belongs to fal, and endpoints are MODELED from
+    fal's public model pages rather than confirmed against a Pika-operated spec.
+  openSource: |
+    Pika is a closed, proprietary platform. The models and inference stack are
+    not open source and are not self-hostable. fal hosts the weights under the
+    partnership; Pika does not distribute them.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://queue.fal.run
+      documented: true
+      note: >-
+        fal-hosted, not Pika-hosted. Pika 2.x models are called through fal's
+        asynchronous HTTP queue (submit a job, poll status, fetch result).
+        Request/response REST over HTTPS with client-initiated polling.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: >-
+        No WebSocket endpoint is documented by Pika (which publishes no API) or
+        by fal for the Pika model endpoints as of the review date.
+  endpointsModeled:
+    - POST https://queue.fal.run/fal-ai/pika/v2.2/text-to-video
+    - POST https://queue.fal.run/fal-ai/pika/v2.2/image-to-video
+    - POST https://queue.fal.run/fal-ai/pika/v2.2/pikascenes
+    - POST https://queue.fal.run/fal-ai/pika/v2.2/pikaframes
+    - POST https://queue.fal.run/fal-ai/pika/v2.1/text-to-video
+    - POST https://queue.fal.run/fal-ai/pika/v2.1/image-to-video
+    - GET  https://queue.fal.run/fal-ai/pika/requests/{request_id}/status
+    - GET  https://queue.fal.run/fal-ai/pika/requests/{request_id}
+  endpointsModeledNote: |
+    These paths are MODELED from fal's published Pika model pages and fal's
+    standard queue convention (the fal client library abstracts the exact HTTP
+    paths). They are NOT confirmed against a Pika-operated OpenAPI definition,
+    because none exists. They document the officially sanctioned access route
+    (Pika-fal partnership), not a Pika first-party API.
+sources:
+  - url: https://pika.art/api
+    type: Documentation
+    note: Landing page only; redirects developers to fal.ai. No endpoints, keys, or OpenAPI on Pika's domain.
+  - url: https://blog.fal.ai/pika-api-is-now-powered-by-fal/
+    type: Announcement
+    note: fal confirms the official Pika-fal partnership hosting Pika 2.2 (text-to-video, image-to-video, Pikascenes, Pikaframes).
+  - url: https://fal.ai/models/fal-ai/pika/v2.2/text-to-video/api
+    type: APIReference
+    note: Endpoint ID fal-ai/pika/v2.2/text-to-video; Authorization Key FAL_KEY; async queue submit/status/result; inputs prompt, resolution, aspect_ratio, duration, seed, negative_prompt.
+  - url: https://fal.ai/models/fal-ai/pika/v2.2/image-to-video/api
+    type: APIReference
+    note: Pika 2.2 image-to-video endpoint on fal.
+  - url: https://pika.art/pricing
+    type: Pricing
+    note: Consumer credit-based subscription tiers (Free, Standard, Pro, Fancy). No API pricing on Pika's domain.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists, and Pika publishes no first-party API
+    of any kind on its own domain. Pika's official programmatic access is
+    delivered through fal.ai under a partnership, where the Pika models run
+    behind fal's asynchronous HTTP queue (request/response REST with polling) -
+    there is no server-push transport on Pika's own surface to model, so no
+    AsyncAPI document was created. The apis.yml entry is a gated stub with
+    endpoints MODELED from fal's public model pages and clearly labeled as
+    fal-hosted, not fabricated as a Pika-operated API.

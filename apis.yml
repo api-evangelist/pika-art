@@ -1,0 +1,73 @@
+aid: pika-art
+url: https://raw.githubusercontent.com/api-evangelist/pika-art/refs/heads/main/apis.yml
+name: Pika
+kind: company
+description: >-
+  Pika (Pika Labs) is a generative AI video platform that turns text prompts and
+  images into short, high-quality videos. Pika is primarily a consumer and
+  creator product delivered through its web app at pika.art (and historically a
+  Discord bot), with features such as text-to-video, image-to-video, Pikascenes,
+  Pikaframes keyframe interpolation, lip sync, and AI sound effects. Pika does
+  NOT publish a first-party developer API on its own domain. Its pika.art/api
+  page is a landing page that directs developers to fal.ai, Pika's official
+  inference partner, which hosts Pika's 2.x video models as callable API
+  endpoints (for example fal-ai/pika/v2.2/text-to-video and
+  fal-ai/pika/v2.2/image-to-video). Consumer access is sold as credit-based
+  monthly subscriptions; programmatic access is billed per generation on fal.
+  Various unofficial third-party wrappers (PiAPI, useapi.net, Pollo, and others)
+  also resell Pika access but are not operated or endorsed by Pika.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Video Generation
+- AI Video
+- Generative AI
+- Text-to-Video
+- Image-to-Video
+- Creative
+created: '2026-07-11'
+modified: '2026-07-11'
+specificationVersion: '0.19'
+apis:
+- aid: pika-art:pika-art-video-generation-api
+  name: Pika Video Generation API (via fal)
+  tags:
+  - Video Generation
+  - AI Video
+  - Text-to-Video
+  - Image-to-Video
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://pika.art/api
+  baseURL: https://queue.fal.run
+  properties:
+  - url: https://pika.art/api
+    type: Documentation
+  - url: https://blog.fal.ai/pika-api-is-now-powered-by-fal/
+    type: Announcement
+  - url: https://fal.ai/models/fal-ai/pika/v2.2/text-to-video/api
+    type: APIReference
+  description: >-
+    Pika's official developer access is not hosted by Pika. Pika partnered with
+    fal to serve its Pika 2.2 video models on fal's inference infrastructure, so
+    the pika.art/api page hands developers off to fal.ai. On fal, Pika models are
+    exposed as async queue endpoints (submit / status / result) authenticated
+    with a fal API key (Authorization: Key FAL_KEY). Documented model endpoint
+    IDs include fal-ai/pika/v2.2/text-to-video, fal-ai/pika/v2.2/image-to-video,
+    Pikascenes, and Pikaframes, plus v2.1 variants. Inputs include prompt,
+    resolution (720p/1080p), aspect_ratio, duration (5 or 10 seconds), seed, and
+    negative_prompt. Endpoints below are modeled from fal's published model
+    pages, not from a Pika-operated OpenAPI definition. No first-party Pika API,
+    OpenAPI document, or public WebSocket surface is published on pika.art.
+common:
+- type: LinkedIn
+  url: https://www.linkedin.com/company/pika-labs
+- type: Website
+  url: https://pika.art
+- type: Documentation
+  url: https://pika.art/api
+- type: Plans
+  url: plans/pika-art-plans-pricing.yml
+- type: FinOps
+  url: finops/pika-art-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

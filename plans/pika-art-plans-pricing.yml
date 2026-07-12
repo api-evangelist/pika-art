@@ -1,0 +1,120 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Pika
+providerId: pika-art
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Video Generation
+- AI Video
+- Generative AI
+- Plans
+description: >-
+  Pika sells access to its pika.art web app as credit-based monthly
+  subscriptions - Free, Standard, Pro, and Fancy - where each generated clip
+  consumes credits based on resolution, duration, and generation mode. Paid tiers
+  advertise roughly a 20% discount when billed annually versus monthly. These are
+  CONSUMER / creator plans for the app; they are NOT API pricing. Pika does not
+  sell a first-party API. Programmatic access to Pika's models is provided
+  through fal.ai (Pika's official inference partner) and is billed per generation
+  on fal, not through these subscription tiers. See the FinOps file for the
+  fal-hosted per-generation costs.
+notes: >-
+  Prices captured from pika.art/pricing on 2026-07-11 and cross-checked against
+  third-party pricing roundups; the annual monthly-equivalent price is shown.
+  Monthly-billed prices are higher (reported around $10 Standard, $35 Pro, $95
+  Fancy). Credit allotments and resolution caps change frequently - reconcile
+  against the live pricing page.
+sources:
+- https://pika.art/pricing
+- https://pika.art/api
+plans:
+- id: pika-free
+  name: Free
+  type: free
+  description: >-
+    Free tier for trying Pika. Bounded monthly credits, capped at 480p, with a
+    watermark on outputs and no commercial-use rights.
+  entries:
+  - label: Monthly Credits
+    name: free_credits
+    type: usage
+    metric: credits
+    limit: 80
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: '0'
+    userMultiplied: false
+  elements:
+  - name: 480p Only
+  - name: Watermarked Output
+  - name: No Commercial Use
+- id: pika-standard
+  name: Standard
+  type: paid
+  description: >-
+    Entry paid tier. More credits, all resolutions, watermark-free downloads, and
+    commercial use. Annual monthly-equivalent price shown.
+  entries:
+  - label: Monthly Credits
+    name: standard_credits
+    type: usage
+    metric: credits
+    limit: 700
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: '8'
+    userMultiplied: false
+  elements:
+  - name: All Resolutions
+  - name: No Watermark
+  - name: Commercial Use
+- id: pika-pro
+  name: Pro
+  type: paid
+  description: >-
+    Mid paid tier marketed as best value. Higher credit allotment and faster
+    generation. Annual monthly-equivalent price shown.
+  entries:
+  - label: Monthly Credits
+    name: pro_credits
+    type: usage
+    metric: credits
+    limit: 2300
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: '28'
+    userMultiplied: false
+  elements:
+  - name: All Resolutions
+  - name: No Watermark
+  - name: Faster Generation
+- id: pika-fancy
+  name: Fancy
+  type: paid
+  description: >-
+    Top paid tier. Largest credit allotment and fastest processing. Annual
+    monthly-equivalent price shown.
+  entries:
+  - label: Monthly Credits
+    name: fancy_credits
+    type: usage
+    metric: credits
+    limit: 6000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: '76'
+    userMultiplied: false
+  elements:
+  - name: All Resolutions
+  - name: No Watermark
+  - name: Fastest Generation
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
