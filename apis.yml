@@ -16,6 +16,17 @@ description: >-
   monthly subscriptions; programmatic access is billed per generation on fal.
   Various unofficial third-party wrappers (PiAPI, useapi.net, Pollo, and others)
   also resell Pika access but are not operated or endorsed by Pika.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: unknown
